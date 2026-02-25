@@ -103,7 +103,8 @@ export function GoldParticles() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-10"
+      // ANTES: className="pointer-events-none fixed inset-0 z-10"
+      className="pointer-events-none absolute inset-0 z-10"
       style={{ width: "100%", height: "100%" }}
       aria-hidden="true"
     />

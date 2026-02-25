@@ -49,11 +49,11 @@ export function GamesCarousel() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="relative mx-auto w-full max-w-[900px] px-4 py-6">
+    <section className="relative mx-auto w-full px-4 py-6 xl:py-10">
       {/* Section title */}
       <div className="mb-4 flex items-center gap-3">
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--gold-dark)] to-transparent" />
-        <h2 className="text-gold-gradient font-serif text-xl font-bold tracking-widest">
+        <h2 className="text-gold-gradient font-serif text-xl lg:text-2xl xl:text-3xl font-bold tracking-widest">
           JOGOS
         </h2>
         <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[var(--gold-dark)] to-transparent" />
@@ -88,7 +88,7 @@ export function GamesCarousel() {
         <div className="overflow-hidden px-2" ref={emblaRef}>
           <div className="-ml-3 flex">
             {games.map((game, index) => (
-              <div key={game.name} className="min-w-0 flex-[0_0_33.33%] pl-3 md:flex-[0_0_20%]">
+              <div key={game.name} className="min-w-0 flex-[0_0_20%] pl-3 lg:flex-[0_0_16.666%] xl:flex-[0_0_14.28%] 2xl:flex-[0_0_12.5%]">
                 <GameCard name={game.name} image={game.image} index={index} />
               </div>
             ))}

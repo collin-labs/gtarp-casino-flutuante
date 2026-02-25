@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Gamepad2, Swords, ShoppingBag, CalendarDays, User } from "lucide-react"
+import { Layers, CircleDollarSign, Lock, CalendarDays, User } from "lucide-react"
 
-const tabs = [
-  { id: "cassino", label: "CASSINO", icon: Gamepad2 },
-  { id: "pvp", label: "PVP", icon: Swords },
-  { id: "loja", label: "LOJA", icon: ShoppingBag },
+const tabs =[
+  { id: "cassino", label: "CASSINO", icon: Layers },
+  { id: "pvp", label: "PVP", icon: CircleDollarSign },
+  { id: "loja", label: "LOJA", icon: Lock },
   { id: "eventos", label: "EVENTOS", icon: CalendarDays },
   { id: "perfil", label: "PERFIL", icon: User },
 ]
@@ -15,80 +15,77 @@ export function BottomNav() {
   const [active, setActive] = useState("cassino")
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[920px] px-3">
-      {/* Double border wrapper */}
-      <div
-        className="rounded-t-xl p-[2px]"
-        style={{
-          background:
-            "linear-gradient(90deg, #8b6f2e 0%, #f5d77a 20%, #c8a44e 50%, #f5d77a 80%, #8b6f2e 100%)",
-        }}
-      >
-        <div className="rounded-t-[10px] bg-[#0c0a06] p-[1.5px]">
-          <div
-            className="rounded-t-[9px] p-[1px]"
-            style={{
-              background:
-                "linear-gradient(90deg, #5a4620 0%, #c8a44e 30%, #8b6f2e 50%, #c8a44e 70%, #5a4620 100%)",
-            }}
-          >
-            <div
-              className="flex items-center justify-around rounded-t-lg px-2 py-2.5"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(18,15,8,0.98) 0%, rgba(10,8,4,0.99) 100%)",
-              }}
+    <div className="w-full flex flex-col relative z-40">
+      
+      {/* Linha Dourada Superior (Estilo do título JOGOS) */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#8b6f2e] to-transparent opacity-60" />
+
+      <nav className="relative flex w-full items-center bg-[#070707]/90 backdrop-blur-sm">
+        {/* Textura de fundo do menu */}
+        <div className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.1]" style={{ backgroundImage: "url('/images/fundo-casino.png')" }} />
+
+        {tabs.map((tab, index) => {
+          const Icon = tab.icon
+          const isActive = active === tab.id
+
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActive(tab.id)}
+              // ALTURA REDUZIDA: h-14 (normal) / h-16 (telas grandes). Fica mais Slim!
+              className="group relative flex flex-1 items-center justify-center gap-2 xl:gap-3 h-14 xl:h-16 transition-all duration-300"
             >
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                const isActive = active === tab.id
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActive(tab.id)}
-                    className={`group relative flex flex-col items-center gap-0.5 rounded-lg px-3 py-1 transition-all duration-500 ${
-                      isActive ? "scale-105" : "opacity-50 hover:opacity-90"
-                    }`}
-                  >
-                    {/* Active glow behind */}
-                    {isActive && (
-                      <div
-                        className="pointer-events-none absolute -inset-1 -z-10 rounded-lg"
-                        style={{
-                          background:
-                            "radial-gradient(ellipse, rgba(200,164,78,0.1) 0%, transparent 70%)",
-                        }}
-                      />
-                    )}
+              {/* === EFEITO LENS FLARE / LUZ CONCENTRADA (IMAGEM 5) === */}
+              {isActive && (
+                <>
+                  {/* 1. Bloom difuso (a névoa verde que sobe) */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-10 opacity-50 pointer-events-none bg-[radial-gradient(ellipse_at_bottom,_rgba(0,230,118,0.3)_0%,_transparent_60%)]" />
 
-                    {/* Active top indicator */}
-                    {isActive && (
-                      <div className="absolute -top-2.5 left-1/2 h-[2px] w-5 -translate-x-1/2 rounded-full bg-[var(--emerald)] shadow-[0_0_8px_rgba(0,230,118,0.6)]" />
-                    )}
+                  {/* 2. Linha verde base (fina e esmaecendo nas pontas) */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#00e676] to-transparent opacity-50" />
+                  
+                  {/* 3. Linha intermediária verde (Engrossa perto do centro) */}
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-[#00e676] to-transparent opacity-100" style={{ boxShadow: "0px 0px 8px rgba(0, 230, 118, 0.8)" }} />
+                  
+                  {/* 4. O NÚCLEO BRANCO E CURTO (Aqui está o traço pequeno e brilhante!) */}
+                  <div className="absolute bottom-[-1px] left-1/2 -translate-x-1/2 w-6 h-[3px] bg-white rounded-full" style={{ boxShadow: "0px 0px 14px 4px rgba(0, 230, 118, 1), 0px 0px 4px 1px rgba(255, 255, 255, 0.9)" }} />
+                </>
+              )}
 
-                    <Icon
-                      className={`h-4 w-4 transition-all duration-500 ${
-                        isActive
-                          ? "text-[var(--gold-light)] drop-shadow-[0_0_6px_rgba(200,164,78,0.5)]"
-                          : "text-[var(--gold-dark)] group-hover:text-[var(--gold)]"
-                      }`}
-                    />
-                    <span
-                      className={`text-[9px] font-bold tracking-wider transition-all duration-500 ${
-                        isActive
-                          ? "text-[var(--gold-light)]"
-                          : "text-[var(--gold-dark)] group-hover:text-[var(--gold)]"
-                      }`}
-                    >
-                      {tab.label}
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+              {/* Separador Vertical ( | ) */}
+              {index !== tabs.length - 1 && (
+                <div className="absolute right-0 top-[25%] bottom-[25%] w-[1px] bg-gradient-to-b from-transparent via-[#8b6f2e]/40 to-transparent z-10" />
+              )}
+
+              {/* ÍCONE */}
+              <div className="relative z-10 flex items-center justify-center">
+                <Icon
+                  className={`h-5 w-5 xl:h-6 xl:w-6 transition-all duration-300 ${
+                    isActive
+                      ? "text-[#00e676] drop-shadow-[0_0_8px_rgba(0,230,118,0.8)] scale-110"
+                      : "text-[#8b6f2e] group-hover:text-[#c8a44e]"
+                  }`}
+                  strokeWidth={isActive ? 2.5 : 2}
+                />
+              </div>
+
+              {/* LABEL */}
+              <span
+                className={`font-serif text-sm lg:text-base xl:text-lg font-bold tracking-[0.12em] uppercase transition-all duration-300 relative z-10 ${
+                  isActive
+                    ? "text-[#f5d77a] drop-shadow-[0_0_8px_rgba(245,215,122,0.8)] scale-105"
+                    : "text-[#8b6f2e] group-hover:text-[#c8a44e]"
+                }`}
+              >
+                {tab.label}
+              </span>
+            </button>
+          )
+        })}
+      </nav>
+
+      {/* Linha Dourada Inferior */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#8b6f2e] to-transparent opacity-60" />
+    </div>
   )
 }

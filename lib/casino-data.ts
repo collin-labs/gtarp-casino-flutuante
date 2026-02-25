@@ -30,7 +30,7 @@ export const GAMES: Record<string, Game[]> = {
   cassino: [
     { id: "bicho", name: "JOGO DO BICHO", sub: "Acerte o animal e ganhe", image: "/assets/9.ANIMA-GAME.png", featured: true, badge: "EXCLUSIVO", badgeColor: "#00E676", colors: ["#FFD700", "#00E676"], players: 1523 },
     { id: "crash", name: "CRASH", sub: "Cash out a tempo", image: "/assets/1.CRASH.png", colors: ["#FF6B00", "#00E676"], players: 2847 },
-    { id: "roleta", name: "ROLETA", sub: "Gire a roda da sorte", image: "/assets/5.ROULETTE.png.png", badge: "HOT", badgeColor: "#FF2D78", colors: ["#FF2D55", "#FFD700"], players: 980 },
+    { id: "roleta", name: "ROLETA", sub: "Gire a roda da sorte", image: "/assets/5.ROULETTE.png", badge: "HOT", badgeColor: "#FF2D78", colors: ["#FF2D55", "#FFD700"], players: 980 },
     { id: "blackjack", name: "BLACKJACK", sub: "Faca 21 e venca", image: "/assets/4.BLACKJACK.png", colors: ["#1DE9B6", "#FFD700"], players: 743 },
     { id: "mines", name: "MINES", sub: "Evite as bombas", image: "/assets/3.MINES.png", colors: ["#00D4FF", "#FF2D78"], players: 1876 },
     { id: "plinko", name: "PLINKO", sub: "Solte a bola e ganhe", image: "/assets/8.PLINKO.png", colors: ["#00E676", "#7B2FBE"], players: 654 },

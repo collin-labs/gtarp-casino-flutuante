@@ -1,17 +1,35 @@
 "use client"
 
-const particles = Array.from({ length: 28 }, (_, i) => ({
-  id: i,
-  left: Math.random() * 100,
-  delay: Math.random() * 25,
-  dur: 12 + Math.random() * 22,
-  size: 1 + Math.random() * 2.5,
-  op: 0.06 + Math.random() * 0.18,
-  color: ["#00E676", "#00D4FF", "#FFD700", "#FF2D78", "#fff"][Math.floor(Math.random() * 5)],
-  drift: -20 + Math.random() * 40,
-}))
+import { useState, useEffect } from "react"
+
+function seededRandom(seed: number) {
+  const x = Math.sin(seed + 1) * 10000
+  return x - Math.floor(x)
+}
+
+function generateParticles() {
+  return Array.from({ length: 28 }, (_, i) => ({
+    id: i,
+    left: seededRandom(i * 7 + 1) * 100,
+    delay: seededRandom(i * 7 + 2) * 25,
+    dur: 12 + seededRandom(i * 7 + 3) * 22,
+    size: 1 + seededRandom(i * 7 + 4) * 2.5,
+    op: 0.06 + seededRandom(i * 7 + 5) * 0.18,
+    color: ["#FFD700", "#D4A017", "#00E676", "#00D4FF", "#fff"][
+      Math.floor(seededRandom(i * 7 + 6) * 5)
+    ],
+    drift: -20 + seededRandom(i * 7 + 7) * 40,
+  }))
+}
+
+const particles = generateParticles()
 
 export function Particles() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) return <div className="p-container" />
+
   return (
     <div className="p-container">
       {particles.map((p) => (

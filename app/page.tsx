@@ -28,9 +28,11 @@ export default function Home() {
 
       {/* Floating particles */}
       <GoldParticles />
+    <div className="relative flex h-screen items-center justify-center overflow-hidden bg-transparent p-4">
 
       {/* Main floating panel */}
       <div className="relative z-20 mx-auto flex min-h-screen max-w-[920px] flex-col px-3 py-3">
+      <div className="relative z-20 mx-auto flex h-[min(900px,92vh)] w-full max-w-[920px] flex-col px-3 py-3">
         {/* Outer gold border */}
         <div
           className="relative flex flex-1 flex-col rounded-2xl p-[2px]"
@@ -56,55 +58,7 @@ export default function Home() {
                   background:
                     "linear-gradient(180deg, rgba(0,230,118,0.4) 0%, rgba(0,230,118,0.1) 30%, transparent 50%, rgba(0,230,118,0.1) 70%, rgba(0,230,118,0.4) 100%)",
                   boxShadow:
-                    "inset 0 0 15px rgba(0,230,118,0.08)",
-                }}
-              >
-                {/* Content container */}
-                <div
-                  className="relative flex flex-1 flex-col overflow-hidden rounded-[9px]"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, #0d0b07 0%, #0a0a0a 30%, #0d0b07 100%)",
-                  }}
-                >
-                  {/* Inner background texture */}
-                  <div
-                    className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-                    style={{ backgroundImage: "url('/images/fundo-casino.png')" }}
-                    aria-hidden="true"
-                  />
-
-                  {/* Corner ornaments - top left */}
-                  <div className="pointer-events-none absolute left-2 top-2 z-30 h-4 w-4">
-                    <div className="h-full w-full rounded-tl-lg border-l-2 border-t-2 border-[var(--gold)]" />
-                    <div className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-[var(--emerald)] shadow-[0_0_6px_rgba(0,230,118,0.6)]" />
-                  </div>
-                  {/* Corner ornaments - top right */}
-                  <div className="pointer-events-none absolute right-2 top-2 z-30 h-4 w-4">
-                    <div className="h-full w-full rounded-tr-lg border-r-2 border-t-2 border-[var(--gold)]" />
-                    <div className="absolute right-0 top-0 h-1.5 w-1.5 rounded-full bg-[var(--emerald)] shadow-[0_0_6px_rgba(0,230,118,0.6)]" />
-                  </div>
-                  {/* Corner ornaments - bottom left */}
-                  <div className="pointer-events-none absolute bottom-16 left-2 z-30 h-4 w-4">
-                    <div className="h-full w-full rounded-bl-lg border-b-2 border-l-2 border-[var(--gold)]" />
-                    <div className="absolute bottom-0 left-0 h-1.5 w-1.5 rounded-full bg-[var(--emerald)] shadow-[0_0_6px_rgba(0,230,118,0.6)]" />
-                  </div>
-                  {/* Corner ornaments - bottom right */}
-                  <div className="pointer-events-none absolute bottom-16 right-2 z-30 h-4 w-4">
-                    <div className="h-full w-full rounded-br-lg border-b-2 border-r-2 border-[var(--gold)]" />
-                    <div className="absolute bottom-0 right-0 h-1.5 w-1.5 rounded-full bg-[var(--emerald)] shadow-[0_0_6px_rgba(0,230,118,0.6)]" />
-                  </div>
-
-                  {/* Top center crown ornament */}
-                  <div className="pointer-events-none absolute left-1/2 top-0 z-30 -translate-x-1/2">
-                    <div className="relative">
-                      <svg viewBox="0 0 40 16" className="h-3 w-8" fill="none">
-                        <path d="M0 16 L8 4 L15 10 L20 0 L25 10 L32 4 L40 16 Z" fill="url(#topCrown)" stroke="var(--gold)" strokeWidth="0.5" />
-                        <defs>
-                          <linearGradient id="topCrown" x1="20" y1="0" x2="20" y2="16">
-                            <stop offset="0%" stopColor="var(--gold-light)" />
-                            <stop offset="100%" stopColor="var(--gold-dark)" />
-                          </linearGradient>
+@@ -108,37 +88,36 @@ export default function Home() {
                         </defs>
                       </svg>
                     </div>
@@ -130,6 +84,7 @@ export default function Home() {
                       <HeroCarousel />
                       <GamesCarousel />
                     </main>
+                    <BottomNav />
                   </div>
                 </div>
               </div>

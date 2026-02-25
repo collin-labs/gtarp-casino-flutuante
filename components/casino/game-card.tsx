@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import type { Game } from "@/lib/casino-data"
-import { ICON_MAP } from "./icons/icon-map"
+import Image from "next/image"
 import { Badge } from "./badge"
 
 interface GameCardProps {
@@ -17,10 +17,6 @@ export function GameCard({ game, size = "normal", index = 0, onPlay }: GameCardP
   const [pressed, setPressed] = useState(false)
   const isFeatured = game.featured
 
-  /* Icon sizes: huge for featured cards, smaller for grid cards */
-  const iconSize = size === "huge" ? 110 : size === "large" ? 90 : 72
-  const renderIcon = ICON_MAP[game.id]
-
   return (
     <div
       className={`g-card ${size} ${isFeatured ? "featured" : ""} ${pressed ? "pressed" : ""}`}
@@ -32,11 +28,13 @@ export function GameCard({ game, size = "normal", index = 0, onPlay }: GameCardP
         "--c1": game.colors[0],
         "--c2": game.colors[1],
         animationDelay: `${index * 70}ms`,
-        transform: hovered ? `translateY(-${isFeatured ? 6 : 4}px) scale(1.02)` : "translateY(0) scale(1)",
+        transform: hovered ? `translateY(-${isFeatured ? 6 : 4}px) scale(1.03)` : "translateY(0) scale(1)",
       } as React.CSSProperties}
     >
       {/* Gold metallic border frame */}
       <div className="card-gold-frame" />
+      {/* Animated shimmer sweep on the border */}
+      <div className="card-border-shimmer" />
 
       {isFeatured && <div className="card-shimmer" />}
 
@@ -46,33 +44,37 @@ export function GameCard({ game, size = "normal", index = 0, onPlay }: GameCardP
         </div>
       )}
 
-      {/* Large icon area - dominates the card */}
-      <div className="card-icon-wrap">
+      {/* Image area - dominates the card */}
+      <div className="card-image-wrap">
         <div
-          className="card-icon-glow"
+          className="card-img-glow"
           style={{
-            background: `radial-gradient(circle,${game.colors[0]}30 0%,${game.colors[1]}10 50%,transparent 70%)`,
-            transform: hovered ? "scale(1.5)" : "scale(1)",
-            opacity: hovered ? 1 : 0.6,
+            background: `radial-gradient(circle,${game.colors[0]}25 0%,${game.colors[1]}10 50%,transparent 70%)`,
+            transform: hovered ? "scale(1.3)" : "scale(1)",
+            opacity: hovered ? 1 : 0.5,
           }}
         />
         <div
-          className="card-icon-main"
+          className="card-img-container"
           style={{
-            transform: hovered ? "scale(1.12) translateY(-4px)" : "scale(1)",
-            filter: hovered
-              ? `drop-shadow(0 0 25px ${game.colors[0]}99) drop-shadow(0 8px 16px rgba(0,0,0,0.6))`
-              : `drop-shadow(0 0 10px ${game.colors[0]}44) drop-shadow(0 4px 8px rgba(0,0,0,0.4))`,
+            transform: hovered ? "scale(1.08)" : "scale(1)",
           }}
         >
-          {renderIcon ? renderIcon(iconSize) : <span style={{ fontSize: `${iconSize * 0.6}px` }}>{"\uD83C\uDFAE"}</span>}
+          <Image
+            src={game.image}
+            alt={game.name}
+            fill
+            sizes={size === "huge" ? "400px" : size === "large" ? "300px" : "200px"}
+            className="card-game-image"
+            priority={index < 6}
+          />
         </div>
       </div>
 
-      {/* Large, bold game name + subtitle at bottom */}
-      <div className="card-text-area">
+      {/* Game name + subtitle at bottom with gradient overlay */}
+      <div className="card-text-overlay">
         <div className="card-name-big">{game.name}</div>
-        <div className="card-sub-text">{game.sub}</div>
+        {size !== "normal" && <div className="card-sub-text">{game.sub}</div>}
         {game.players && (
           <div className={`card-players ${hovered ? "show" : ""}`}>
             <span className="live-d" />
@@ -81,12 +83,12 @@ export function GameCard({ game, size = "normal", index = 0, onPlay }: GameCardP
         )}
       </div>
 
-      {/* Bottom glow line */}
+      {/* Bottom glow line - neon accent */}
       <div
         className="card-btm-glow"
         style={{
-          background: `linear-gradient(90deg,transparent,${game.colors[0]}${hovered ? "bb" : "44"},transparent)`,
-          boxShadow: hovered ? `0 2px 25px ${game.colors[0]}55` : "none",
+          background: `linear-gradient(90deg,transparent,${game.colors[0]}${hovered ? "cc" : "55"},transparent)`,
+          boxShadow: hovered ? `0 2px 30px ${game.colors[0]}66` : "none",
         }}
       />
       {hovered && <div className="card-sweep" style={{ "--sw": game.colors[0] } as React.CSSProperties} />}

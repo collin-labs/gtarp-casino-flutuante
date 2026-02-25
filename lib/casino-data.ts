@@ -2,6 +2,7 @@ export interface Game {
   id: string
   name: string
   sub: string
+  image: string
   featured?: boolean
   badge?: string
   badgeColor?: string
@@ -27,40 +28,43 @@ export interface LiveFeedItem {
 
 export const GAMES: Record<string, Game[]> = {
   cassino: [
-    { id: "bicho", name: "JOGO DO BICHO", sub: "Exige muito tempo", featured: true, badge: "EXCLUSIVO", badgeColor: "#00E676", colors: ["#FFD700", "#00E676"], players: 1523 },
-    { id: "crash", name: "CRASH", sub: "Cash out a tempo", colors: ["#FF6B00", "#00E676"], players: 2847 },
-    { id: "roleta", name: "ROLETA", sub: "Gire a roda", badge: "HOT", badgeColor: "#FF2D78", colors: ["#FF2D55", "#FFD700"], players: 980 },
-    { id: "poker", name: "POKER", sub: "Pague pix", colors: ["#0066FF", "#FFD700"], players: 612 },
-    { id: "dados", name: "DADOS", sub: "Doxxe eudo tempo    COINFLIP    Nirces", featured: true, colors: ["#FFD700", "#FF8C00"], players: 432 },
-    { id: "roletabr", name: "ROLETA", sub: "Crudle cold tempo", colors: ["#00E676", "#FFD700"], players: 320 },
-    { id: "blackjack", name: "ROLETA", sub: "Copa fines", badge: "REEL", badgeColor: "#00E676", colors: ["#1DE9B6", "#FFD700"], players: 743 },
-    { id: "plinko", name: "PLINKO", sub: "Solte a bola", colors: ["#00E676", "#7B2FBE"], players: 654 },
-    { id: "mines", name: "MINES", sub: "Evite as bombas", colors: ["#00D4FF", "#FF2D78"], players: 1876 },
-    { id: "slots", name: "BAOFLOX", sub: "Mancos", colors: ["#FF2D78", "#7B2FBE"], players: 1102 },
+    { id: "bicho", name: "JOGO DO BICHO", sub: "Acerte o animal e ganhe", image: "/assets/9.ANIMA-GAME.png", featured: true, badge: "EXCLUSIVO", badgeColor: "#00E676", colors: ["#FFD700", "#00E676"], players: 1523 },
+    { id: "crash", name: "CRASH", sub: "Cash out a tempo", image: "/assets/1.CRASH.png", colors: ["#FF6B00", "#00E676"], players: 2847 },
+    { id: "roleta", name: "ROLETA", sub: "Gire a roda da sorte", image: "/assets/5.ROULETTE.png.png", badge: "HOT", badgeColor: "#FF2D78", colors: ["#FF2D55", "#FFD700"], players: 980 },
+    { id: "blackjack", name: "BLACKJACK", sub: "Faca 21 e venca", image: "/assets/4.BLACKJACK.png", colors: ["#1DE9B6", "#FFD700"], players: 743 },
+    { id: "mines", name: "MINES", sub: "Evite as bombas", image: "/assets/3.MINES.png", colors: ["#00D4FF", "#FF2D78"], players: 1876 },
+    { id: "plinko", name: "PLINKO", sub: "Solte a bola e ganhe", image: "/assets/8.PLINKO.png", colors: ["#00E676", "#7B2FBE"], players: 654 },
+    { id: "slots", name: "CACA-NIQUEL", sub: "Gire os rolos", image: "/assets/2.SLOTS.png", colors: ["#FF2D78", "#FFD700"], players: 1102 },
+    { id: "dados", name: "DADOS", sub: "Aposte no numero", image: "/assets/7.DICE.png", colors: ["#FFD700", "#FF8C00"], players: 432 },
+    { id: "poker", name: "POKER", sub: "Mostre suas cartas", image: "/assets/6.POKER.png", colors: ["#0066FF", "#FFD700"], players: 612 },
+    { id: "roletabr", name: "ROLETA BRASILEIRA", sub: "Versao nacional", image: "/assets/10.BRAZILIAN-ROULETTE.png", colors: ["#00E676", "#FFD700"], players: 320 },
+    { id: "bingo", name: "BINGO", sub: "Preencha a cartela", image: "/assets/21.BINGO.png", colors: ["#FFD700", "#FF2D78"], players: 289 },
+    { id: "poolGame", name: "POOL GAME", sub: "Sinuca premium", image: "/assets/22.POOL-GAME.png", colors: ["#00D4FF", "#00E676"], players: 178 },
   ],
   pvp: [
-    { id: "coinflip", name: "COINFLIP", sub: "50/50 PVP", featured: true, badge: "PVP", badgeColor: "#FF2D78", colors: ["#FFD700", "#00D4FF"], players: 892 },
-    { id: "jackpot", name: "JACKPOT", sub: "Pote acumulado", colors: ["#FFD700", "#FF8C00"], players: 345 },
-    { id: "battles", name: "BATTLES", sub: "Caixas PVP", colors: ["#FF2D78", "#00D4FF"], players: 567 },
-    { id: "pokerpvp", name: "POKER PVP", sub: "Mesa PVP", colors: ["#7B2FBE", "#FFD700"] },
-    { id: "bjpvp", name: "BJ PVP", sub: "21 PVP", colors: ["#FF2D55", "#00E676"] },
+    { id: "coinflip", name: "COINFLIP", sub: "50/50 cara ou coroa", image: "/assets/12.CONIFLIP.png", featured: true, badge: "PVP", badgeColor: "#FF2D78", colors: ["#FFD700", "#00D4FF"], players: 892 },
+    { id: "jackpot", name: "JACKPOT", sub: "Pote acumulado PVP", image: "/assets/13.JACKPOT.png", colors: ["#FFD700", "#FF8C00"], players: 345 },
+    { id: "battles", name: "CASE BATTLE", sub: "Batalha de caixas", image: "/assets/11.CASE-BATTLE.png", colors: ["#FF2D78", "#00D4FF"], players: 567 },
+    { id: "pokerpvp", name: "POKER PVP", sub: "Mesa contra jogadores", image: "/assets/6.POKER.png", colors: ["#7B2FBE", "#FFD700"] },
+    { id: "bjpvp", name: "BLACKJACK PVP", sub: "21 contra outros", image: "/assets/4.BLACKJACK.png", colors: ["#FF2D55", "#00E676"] },
   ],
   eventos: [
-    { id: "loteria", name: "LOTERIA", sub: "Bilhetes semanais", featured: true, badge: "ATIVO", badgeColor: "#00E676", colors: ["#FFD700", "#00E676"], players: 4210 },
-    { id: "daily", name: "GR\u00C1TIS DI\u00C1RIO", sub: "Caixa todo dia", colors: ["#FF2D78", "#FFD700"], badge: "NOVO", badgeColor: "#00D4FF" },
-    { id: "sorteios", name: "SORTEIOS", sub: "Eventos especiais", colors: ["#FFD700", "#7B2FBE"] },
+    { id: "loteria", name: "LOTERIA", sub: "Bilhetes semanais", image: "/assets/18.LOTTERY.png", featured: true, badge: "ATIVO", badgeColor: "#00E676", colors: ["#FFD700", "#00E676"], players: 4210 },
+    { id: "daily", name: "GRATIS DIARIO", sub: "Caixa gratis todo dia", image: "/assets/19.DAILY-FREE.png", colors: ["#FF2D78", "#FFD700"], badge: "NOVO", badgeColor: "#00D4FF" },
+    { id: "sorteios", name: "GIVEAWAYS", sub: "Eventos especiais", image: "/assets/20.GIVEAWAYS.png", colors: ["#FFD700", "#7B2FBE"] },
   ],
   loja: [
-    { id: "caixas", name: "CAIXAS", sub: "Lootbox", colors: ["#7B2FBE", "#FFD700"] },
-    { id: "upgrade", name: "UPGRADE", sub: "Combine itens", colors: ["#FFD700", "#FF8C00"] },
-    { id: "marketplace", name: "MARKET", sub: "Compre e venda", colors: ["#00D4FF", "#00E676"] },
+    { id: "caixas", name: "CASES", sub: "Abra caixas premium", image: "/assets/14.CASES.png", colors: ["#7B2FBE", "#FFD700"] },
+    { id: "upgrade", name: "UPGRADE", sub: "Combine e evolua", image: "/assets/15.UPGRADE.png", colors: ["#FFD700", "#FF8C00"] },
+    { id: "marketplace", name: "MARKETPLACE", sub: "Compre e venda itens", image: "/assets/16.MARKETPLACE.png", colors: ["#00D4FF", "#00E676"] },
+    { id: "inventory", name: "INVENTARIO", sub: "Seus itens", image: "/assets/17.INVENTORY.png", colors: ["#E2E2EA", "#FFD700"] },
   ],
 }
 
 export const HERO_SLIDES: (Game & { desc: string; stat: string })[] = [
-  { ...GAMES.cassino[0], desc: "O cl\u00E1ssico brasileiro com 25 animais. Exclusivo no FiveM!", stat: "1.523 apostas hoje" },
-  { ...GAMES.cassino[4], desc: "Acerte o n\u00FAmero e ganhe grande!", stat: "432 jogando agora" },
-  { ...GAMES.eventos[0], desc: "Sorteio semanal com premia\u00E7\u00E3o gigante!", stat: "4.210 bilhetes vendidos" },
+  { ...GAMES.cassino[0], desc: "O classico brasileiro com 25 animais. Exclusivo no FiveM!", stat: "1.523 apostas hoje" },
+  { ...GAMES.cassino[2], desc: "Gire a roda e tente a sorte nos numeros!", stat: "980 jogando agora" },
+  { ...GAMES.cassino[6], desc: "Gire os rolos e acerte a combinacao premiada!", stat: "1.102 jogando agora" },
 ]
 
 export const DOCK_ITEMS: DockItem[] = [

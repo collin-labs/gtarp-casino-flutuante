@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import type { Game } from "@/lib/casino-data"
 import { GAMES } from "@/lib/casino-data"
-import { ICON_MAP } from "./icons/icon-map"
 import { Particles } from "./particles"
 import { CornerAccents } from "./corner-accents"
 import { HeaderLED } from "./header-led"
@@ -18,6 +17,7 @@ export function BlackoutCasino() {
   const [tabTr, setTabTr] = useState<string | null>(null)
   const [game, setGame] = useState<Game | null>(null)
   const [gameTr, setGameTr] = useState<string | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setTimeout(() => setIsOpen(true), 100)
@@ -59,28 +59,34 @@ export function BlackoutCasino() {
     }, 450)
   }, [gameTr])
 
-  const games = GAMES[tab] || []
-  const hasHero = false /* No hero carousel -- featured cards ARE the heroes */
+  const scrollCarousel = (dir: "left" | "right") => {
+    if (!carouselRef.current) return
+    const scrollAmount = 260
+    carouselRef.current.scrollBy({
+      left: dir === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    })
+  }
 
-  /* For cassino: build a bespoke grid layout matching the reference image.
-     Featured games become large cards that span 2 columns.
-     Other tabs keep the simple grid. */
+  const games = GAMES[tab] || []
+
+  /* For cassino tab: Hero (featured) + 4 Medium + Carousel (rest) */
+  const featuredGames = tab === "cassino" ? games.filter(g => g.featured) : []
+  const mediumGames = tab === "cassino" ? games.filter(g => !g.featured).slice(0, 4) : []
+  const carouselGames = tab === "cassino" ? games.filter(g => !g.featured).slice(4) : []
+
+  /* For other tabs: grid layout */
   const gc =
     tab === "eventos"
       ? { cols: Math.min(games.length, 3), pp: 6, sz: "large" as const }
       : tab === "pvp"
         ? { cols: games.length <= 4 ? 2 : 3, pp: 6, sz: "large" as const }
         : tab === "loja"
-          ? { cols: 3, pp: 6, sz: "large" as const }
+          ? { cols: 4, pp: 8, sz: "large" as const }
           : { cols: 4, pp: 12, sz: "normal" as const }
 
-  /* For cassino tab, split featured vs regular */
-  const featuredGames = tab === "cassino" ? games.filter(g => g.featured) : []
-  const regularGames = tab === "cassino" ? games.filter(g => !g.featured) : games
-
-  const tp = Math.ceil(regularGames.length / gc.pp)
-  const pg = regularGames.slice(page * gc.pp, (page + 1) * gc.pp)
-  const renderIcon = game ? ICON_MAP[game.id] : null
+  const tp = Math.ceil(games.length / gc.pp)
+  const pg = games.slice(page * gc.pp, (page + 1) * gc.pp)
 
   return (
     <>
@@ -88,7 +94,7 @@ export function BlackoutCasino() {
       <div className={`ebw ${isOpen ? "on" : ""}`}>
         <div className="panel">
           <div style={{ position: "absolute", inset: "8px", pointerEvents: "none", zIndex: 50 }}>
-            <CornerAccents color="#00E67644" />
+            <CornerAccents color="#D4A01744" s={32} />
           </div>
           <div className="scanl" />
           <Particles />
@@ -103,8 +109,12 @@ export function BlackoutCasino() {
                       <button className="gs-back" onClick={closeGame}>
                         {"\u2190 VOLTAR"}
                       </button>
-                      <div style={{ position: "relative", zIndex: 2 }}>
-                        {renderIcon ? renderIcon(140) : <span style={{ fontSize: "5rem" }}>{"\uD83C\uDFAE"}</span>}
+                      <div style={{ position: "relative", zIndex: 2, width: 200, height: 200 }}>
+                        <img
+                          src={game.image}
+                          alt={game.name}
+                          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                        />
                       </div>
                       <div className="gs-title">{game.name}</div>
                       <div className="gs-sub">{"Interface do jogo \u2014 em constru\u00E7\u00E3o"}</div>
@@ -130,9 +140,16 @@ export function BlackoutCasino() {
                         style={{
                           animation: "hif 1s ease-in-out",
                           filter: `drop-shadow(0 0 40px ${game.colors[0]}66)`,
+                          width: 160,
+                          height: 160,
+                          position: "relative",
                         }}
                       >
-                        {renderIcon ? renderIcon(120) : <span style={{ fontSize: "4rem" }}>{"\uD83C\uDFAE"}</span>}
+                        <img
+                          src={game.image}
+                          alt={game.name}
+                          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                        />
                       </div>
                     </div>
                   )}
@@ -148,46 +165,56 @@ export function BlackoutCasino() {
                   <span>{tab === "perfil" ? "\uD83D\uDC64" : "\u2699\uFE0F"}</span>
                   <span>{tab === "perfil" ? "PERFIL \u2014 EM BREVE" : "CONFIG \u2014 EM BREVE"}</span>
                 </div>
-              ) : (
-                <>
-                  {tab === "cassino" ? (
-                    /* Bespoke casino grid: featured big cards + regular smaller cards */
-                    <div className="casino-grid">
-                      {/* Featured card 1 - spans 2 rows on left */}
-                      {featuredGames[0] && (
-                        <div className="cg-featured-1">
-                          <GameCard key={`feat-${featuredGames[0].id}`} game={featuredGames[0]} size="huge" index={0} onPlay={playGame} />
-                        </div>
-                      )}
-                      {/* Top row regular cards */}
-                      {pg.slice(0, 3).map((g, i) => (
-                        <GameCard key={`r1-${g.id}`} game={g} size="normal" index={i + 1} onPlay={playGame} />
-                      ))}
-                      {/* Featured card 2 - spans 2 rows on left */}
-                      {featuredGames[1] && (
-                        <div className="cg-featured-2">
-                          <GameCard key={`feat-${featuredGames[1].id}`} game={featuredGames[1]} size="huge" index={4} onPlay={playGame} />
-                        </div>
-                      )}
-                      {/* Middle row regular cards */}
-                      {pg.slice(3, 6).map((g, i) => (
-                        <GameCard key={`r2-${g.id}`} game={g} size="normal" index={i + 5} onPlay={playGame} />
-                      ))}
-                      {/* Bottom row regular cards */}
-                      {pg.slice(6, 10).map((g, i) => (
-                        <GameCard key={`r3-${g.id}`} game={g} size="normal" index={i + 8} onPlay={playGame} />
-                      ))}
-                    </div>
-                  ) : (
-                    /* Other tabs: simple grid */
-                    <div className="grid-wrap">
-                      <div className="grid" style={{ gridTemplateColumns: `repeat(${gc.cols},1fr)` }}>
-                        {pg.map((g, i) => (
-                          <GameCard key={`${tab}-${page}-${g.id}`} game={g} size={gc.sz} index={i} onPlay={playGame} />
+              ) : tab === "cassino" ? (
+                /* === CASINO TAB: Hero + 4 Medium + Carousel === */
+                <div className="casino-layout">
+                  {/* Hero Carousel */}
+                  <HeroCarousel onPlay={playGame} />
+
+                  {/* 4 Medium Cards */}
+                  <div className="medium-cards-row">
+                    {mediumGames.map((g, i) => (
+                      <GameCard key={g.id} game={g} size="large" index={i + 1} onPlay={playGame} />
+                    ))}
+                  </div>
+
+                  {/* Horizontal Carousel */}
+                  {carouselGames.length > 0 && (
+                    <div className="carousel-section">
+                      <button
+                        className="carousel-arrow carousel-arrow-left"
+                        onClick={() => scrollCarousel("left")}
+                        aria-label="Scroll esquerda"
+                      >
+                        {"\u2039"}
+                      </button>
+                      <div className="carousel-track" ref={carouselRef}>
+                        {carouselGames.map((g, i) => (
+                          <div key={g.id} className="carousel-card-wrap">
+                            <GameCard game={g} size="normal" index={i + 5} onPlay={playGame} />
+                          </div>
                         ))}
                       </div>
+                      <button
+                        className="carousel-arrow carousel-arrow-right"
+                        onClick={() => scrollCarousel("right")}
+                        aria-label="Scroll direita"
+                      >
+                        {"\u203A"}
+                      </button>
                     </div>
                   )}
+                </div>
+              ) : (
+                /* Other tabs: simple grid */
+                <>
+                  <div className="grid-wrap">
+                    <div className="grid" style={{ gridTemplateColumns: `repeat(${gc.cols},1fr)` }}>
+                      {pg.map((g, i) => (
+                        <GameCard key={`${tab}-${page}-${g.id}`} game={g} size={gc.sz} index={i} onPlay={playGame} />
+                      ))}
+                    </div>
+                  </div>
                   {tp > 1 && (
                     <div className="dots">
                       {Array.from({ length: tp }, (_, i) => (

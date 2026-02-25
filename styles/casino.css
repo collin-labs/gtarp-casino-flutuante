@@ -1,0 +1,53 @@
+
+:root {
+  --bg: #08080A;
+  --gold1: #F7E7B0;
+  --gold2: #D8B35A;
+  --gold3: #8E6A1B;
+  --neon: #00E676;
+}
+
+.casino-panel {
+  background: rgba(8,8,10,.92);
+  backdrop-filter: blur(12px);
+}
+
+.gold-title {
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  background: linear-gradient(180deg, var(--gold1), var(--gold2), var(--gold3));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.gold-frame {
+  border-radius: 18px;
+  border: 1px solid rgba(216,179,90,.4);
+}
+
+.neon-btn {
+  background: rgba(0,230,118,.15);
+  border: 1px solid rgba(0,230,118,.4);
+}
+
+.card-press {
+  transition: transform .2s ease;
+}
+
+.card-press:hover {
+  transform: translateY(-4px);
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+.particle-bg {
+  background: radial-gradient(circle at 30% 40%, rgba(0,230,118,.18), transparent 50%),
+              radial-gradient(circle at 70% 20%, rgba(216,179,90,.18), transparent 55%);
+  animation: pulse 6s infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.4; }
+  to { opacity: 0.7; }
+}

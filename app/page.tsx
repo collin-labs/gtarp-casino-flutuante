@@ -4,13 +4,33 @@ import { CasinoHeader } from "@/components/casino/header"
 import { HeroCarousel } from "@/components/casino/hero-carousel"
 import { GamesCarousel } from "@/components/casino/games-carousel"
 import { BottomNav } from "@/components/casino/bottom-nav"
+import { GoldParticles } from "@/components/casino/gold-particles"
 
 export default function Home() {
   return (
-    <div className="relative flex h-screen items-center justify-center overflow-hidden bg-transparent p-4">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--background)]">
+      {/* Background image */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40"
+        style={{ backgroundImage: "url('/images/fundo-casino.png')" }}
+        aria-hidden="true"
+      />
+
+      {/* Dark vignette overlay */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center 30%, transparent 0%, rgba(10,10,10,0.7) 100%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Floating particles */}
+      <GoldParticles />
 
       {/* Main floating panel */}
-      <div className="relative z-20 mx-auto flex h-[min(900px,92vh)] w-full max-w-[920px] flex-col px-3 py-3">
+      <div className="relative z-20 mx-auto flex min-h-screen max-w-[920px] flex-col px-3 py-3">
         {/* Outer gold border */}
         <div
           className="relative flex flex-1 flex-col rounded-2xl p-[2px]"
@@ -110,7 +130,6 @@ export default function Home() {
                       <HeroCarousel />
                       <GamesCarousel />
                     </main>
-                    <BottomNav />
                   </div>
                 </div>
               </div>
@@ -118,6 +137,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <BottomNav />
     </div>
   )
 }
